@@ -23,6 +23,13 @@ st.set_page_config(page_title="Financial Reports Chatbot", page_icon="📊", lay
 st.title("📊 Financial Reports RAG Chatbot")
 st.caption("Ask questions about Fortune 50 annual reports — powered by Groq + LangChain")
 
+if not GROQ_API_KEY or not GROQ_API_KEY.startswith("gsk_"):
+    st.error("❌ GROQ_API_KEY is missing or invalid. Go to App Settings → Secrets and add it.")
+    st.stop()
+
+# TEMPORARY DEBUG — remove after fixing
+st.info(f"Key preview: {GROQ_API_KEY[:10]}...{GROQ_API_KEY[-4:]}")
+
 # Company coverage panel
 with st.expander("📋 Covered Companies — click to expand", expanded=True):
     col1, col2, col3 = st.columns(3)
