@@ -51,7 +51,7 @@ st.divider()
 def load_chain():
     embeddings = FastEmbedEmbeddings()
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
-    llm = ChatGroq(model="groq/compound-mini", temperature=0, api_key=GROQ_API_KEY)
+    llm = ChatGroq(model="openai/gpt-oss-20b", temperature=0, api_key=GROQ_API_KEY)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 
     prompt = ChatPromptTemplate.from_template("""You are a financial analyst assistant.
