@@ -9,14 +9,15 @@ from langchain_core.runnables import RunnablePassthrough
 
 CHROMA_DIR = "chroma_db"
 
-# Works on both local (.env) and Streamlit Cloud (secrets)
-GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY", ""))
-st.write(f"Key loaded: {bool(GROQ_API_KEY)} | Starts with: {GROQ_API_KEY[:7] if GROQ_API_KEY else 'EMPTY'}")
-st.set_page_config(page_title="Financial Reports Chatbot", page_icon="📊", layout="centered")
-st.title("📊 Financial Reports RAG Chatbot")
-st.caption("Ask questions about Fortune 500 financial reports — powered by Groq + LangChain")
+# Load API key — fail clearly if missing
+try:
+    GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+except (KeyError, FileNotFoundError):
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
-@st.cache_resource
+if not GROQ_API_KEY or not GROQ_API_KEY.startswith("gsk_"):
+    st.error("❌ GROQ_API_KEY is missing or invalid. Go to App Settings → Secrets and add it.")
+    st.stop()
 def load_chain():
     embeddings = FastEmbedEmbeddings()
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
