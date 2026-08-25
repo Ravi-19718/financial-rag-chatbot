@@ -18,6 +18,29 @@ except (KeyError, FileNotFoundError):
 if not GROQ_API_KEY or not GROQ_API_KEY.startswith("gsk_"):
     st.error("❌ GROQ_API_KEY is missing or invalid. Go to App Settings → Secrets and add it.")
     st.stop()
+
+st.set_page_config(page_title="Financial Reports Chatbot", page_icon="📊", layout="centered")
+st.title("📊 Financial Reports RAG Chatbot")
+st.caption("Ask questions about Fortune 50 annual reports — powered by Groq + LangChain")
+
+# Company coverage panel
+with st.expander("📋 Covered Companies — click to expand", expanded=True):
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown("🛒 **Walmart**")
+        st.markdown("☁️ **Amazon**")
+    with col2:
+        st.markdown("🍎 **Apple**")
+        st.markdown("🪟 **Microsoft**")
+    with col3:
+        st.markdown("🏦 **MetLife**")
+    st.markdown("---")
+    st.markdown("*Source: Annual 10-K filings from SEC EDGAR*")
+
+st.divider()
+
+
+@st.cache_resource
 def load_chain():
     embeddings = FastEmbedEmbeddings()
     vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
@@ -43,6 +66,7 @@ Answer:""")
         | StrOutputParser()
     )
     return chain, retriever
+
 
 if not os.path.exists(CHROMA_DIR):
     st.error("⚠️ No vector database found. Please run `python ingest.py` first.")
