@@ -4,8 +4,8 @@ import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_community.embeddings import FastEmbedEmbeddings
 from langchain_chroma import Chroma
-from langchain.chains import RetrievalQA
-from langchain.prompts import PromptTemplate
+from langchain_classic.chains import RetrievalQA
+from langchain_core.prompts import PromptTemplate
 
 # Load API keys from .env
 load_dotenv()
