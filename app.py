@@ -28,7 +28,7 @@ if not GROQ_API_KEY or not GROQ_API_KEY.startswith("gsk_"):
     st.stop()
 
 # TEMPORARY DEBUG — remove after fixing
-st.info(f"Key preview: {GROQ_API_KEY[:10]}...{GROQ_API_KEY[-4:]}")
+#st.info(f"Key preview: {GROQ_API_KEY[:10]}...{GROQ_API_KEY[-4:]}")
 
 # Company coverage panel
 with st.expander("📋 Covered Companies — click to expand", expanded=True):
