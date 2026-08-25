@@ -11,7 +11,7 @@ CHROMA_DIR = "chroma_db"
 
 # Works on both local (.env) and Streamlit Cloud (secrets)
 GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY", ""))
-
+st.write(f"Key loaded: {bool(GROQ_API_KEY)} | Starts with: {GROQ_API_KEY[:7] if GROQ_API_KEY else 'EMPTY'}")
 st.set_page_config(page_title="Financial Reports Chatbot", page_icon="📊", layout="centered")
 st.title("📊 Financial Reports RAG Chatbot")
 st.caption("Ask questions about Fortune 500 financial reports — powered by Groq + LangChain")
